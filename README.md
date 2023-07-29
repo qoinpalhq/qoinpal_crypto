@@ -37,7 +37,7 @@ else
 go run main.go
 ```
 2. Once the development server is running on port 9002, you can make api calls e.g to generate Bitcoin address 
-   ``` bash 
+``` bash 
    curl GET http://localhost:9002/api/address/bitcoin
 ```
 or use any other clients to make api requests
