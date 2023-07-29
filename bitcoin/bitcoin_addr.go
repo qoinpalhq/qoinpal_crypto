@@ -17,8 +17,8 @@ func init(){
 const NETWORK_ID = 0x00
 type BitcoinDisposableWallet struct{
 	PrivateKey *ecdsa.PrivateKey `json:"priv_key"`
-	PublicKey *ecdsa.PublicKey
-	Address string
+	PublicKey *ecdsa.PublicKey `json:"pub_key"`
+	Address string	`json:"bitcoin_addr"`
 }
 
 func NewBitcoinDisposableWallet() *BitcoinDisposableWallet{
