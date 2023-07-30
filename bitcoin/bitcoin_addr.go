@@ -1,32 +1,35 @@
 package bitcoin
 
 import (
-	"crypto/sha256"
 	"crypto/ecdsa"
 	"crypto/elliptic"
+	"crypto/sha256"
 	// "math/big"
 	"crypto/rand"
 	"github.com/btcsuite/btcutil/base58"
-	"log"
 	rp "golang.org/x/crypto/ripemd160"
+	"log"
 )
 
-func init(){
+func init() {
 	log.SetPrefix("Bitcoin:")
 }
+
 const NETWORK_ID = 0x00
-type BitcoinDisposableWallet struct{
+
+type BitcoinDisposableWallet struct {
 	PrivateKey *ecdsa.PrivateKey `json:"priv_key"`
-	PublicKey *ecdsa.PublicKey `json:"pub_key"`
-	Address string	`json:"bitcoin_addr"`
+	PublicKey  *ecdsa.PublicKey  `json:"pub_key"`
+	Address    string            `json:"bitcoin_addr"`
 }
 
-func NewBitcoinDisposableWallet() *BitcoinDisposableWallet{
+func NewBitcoinDisposableWallet() (*BitcoinDisposableWallet, error) {
 	// Generate a private key
 	pk, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	if err != nil{
+	if err != nil {
 		// replace with error returned in response from server
-		log.Fatalf("error generating new private key: %v ", err.Error())
+		//log.Fatalf("error generating new private key: %v ", err.Error())
+		return nil, err
 	}
 	newWallet := new(BitcoinDisposableWallet)
 	newWallet.PrivateKey = pk
@@ -59,6 +62,6 @@ func NewBitcoinDisposableWallet() *BitcoinDisposableWallet{
 	copy(checkSumConcat[21:], checkSum)
 	address := base58.Encode(checkSumConcat)
 	newWallet.Address = address
-	return newWallet
+	return newWallet, err
 
 }
