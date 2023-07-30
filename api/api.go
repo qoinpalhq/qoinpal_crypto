@@ -1,27 +1,26 @@
 package api
 
 import (
+	btc "github.com/ayowilfred95/qoinpal_crypto/bitcoin"
+	eth "github.com/ayowilfred95/qoinpal_crypto/ethereum"
 	"github.com/gin-gonic/gin"
 	"log"
-	"strings"
 	"net/http"
-	btc "github.com/ayowilfred95/qoinpal_crypto/bitcoin"
-	eth "github.com/ayowilfred95/qoinpal_crypto/ethereum" 
+	"strings"
 )
 
-
-func init(){
+func init() {
 	log.SetPrefix("API:")
 }
 
-type ApiServer struct{
+type ApiServer struct {
 	Router *gin.Engine
 }
 
-func NewApiServer(router *gin.Engine) *ApiServer{
+func NewApiServer(router *gin.Engine) *ApiServer {
 	return &ApiServer{router}
 }
-func (ap *ApiServer) RunServer(){
+func (ap *ApiServer) RunServer() {
 	// register endpoints
 	ap.Router.GET("/api/address/:chain_type", ap.handleGetCryptoAddress)
 	ap.Router.Run()
