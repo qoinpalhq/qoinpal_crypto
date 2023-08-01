@@ -38,7 +38,12 @@ func GetValue(key, value []byte)([]byte, error){
 		 // This func with val would only be called if item.Value encounters no error.
 		 // according to the documentation
 		return item.Value(func (val []byte) error {
-
+			/*
+			* @dev  I needed to log something
+			* because the files inside the badgerdb is unreadable
+			* i even use json marshal to encode it
+			* The thing no work
+			*/
 			fmt.Printf("The answer is: %s\n", val)
 			value = append([]byte{}, val...)
 			return nil
