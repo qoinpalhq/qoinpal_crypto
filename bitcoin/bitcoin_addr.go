@@ -29,7 +29,7 @@ func NewBitcoinDisposableWallet() (*BitcoinDisposableWallet, error) {
 	if err != nil {
 		// replace with error returned in response from server
 		//log.Fatalf("error generating new private key: %v ", err.Error())
-		return nil, err
+		return nil,err
 	}
 	newWallet := new(BitcoinDisposableWallet)
 	newWallet.PrivateKey = pk

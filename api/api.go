@@ -3,7 +3,10 @@ package api
 import (
 	btc "github.com/ayowilfred95/qoinpal_crypto/bitcoin"
 	eth "github.com/ayowilfred95/qoinpal_crypto/ethereum"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+
 	"log"
 	"net/http"
 	"strings"
@@ -11,6 +14,16 @@ import (
 
 func init() {
 	log.SetPrefix("API:")
+
+	// environmental variables
+	if err := godotenv.Load(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+type JWTClaims struct {
+	UserID string `json:"userID"`
+	jwt.StandardClaims
 }
 
 type ApiServer struct {
@@ -21,8 +34,10 @@ func NewApiServer(router *gin.Engine) *ApiServer {
 	return &ApiServer{router}
 }
 func (ap *ApiServer) RunServer() {
+
 	// register endpoints
 	ap.Router.GET("/api/address/:chain_type", ap.handleGetCryptoAddress)
+
 	ap.Router.Run()
 }
 
@@ -39,6 +54,7 @@ func (ap *ApiServer) handleGetCryptoAddress(c *gin.Context) {
 			})
 			return
 		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"bitcoin_address": newWallet.Address,
 		})
