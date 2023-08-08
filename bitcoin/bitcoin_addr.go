@@ -4,15 +4,22 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/sha256"
+	"fmt"
+
 	// "math/big"
 	"crypto/rand"
+	"log"
+
 	"github.com/btcsuite/btcutil/base58"
 	rp "golang.org/x/crypto/ripemd160"
-	"log"
 )
 
+
+ 
+ 
 func init() {
 	log.SetPrefix("Bitcoin:")
+
 }
 
 const NETWORK_ID = 0x00
@@ -23,17 +30,23 @@ type BitcoinDisposableWallet struct {
 	Address    string            `json:"bitcoin_addr"`
 }
 
+
+
+
 func NewBitcoinDisposableWallet() (*BitcoinDisposableWallet, error) {
+
 	// Generate a private key
 	pk, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		// replace with error returned in response from server
-		//log.Fatalf("error generating new private key: %v ", err.Error())
+		//log.Fatal("error generating new private key: %v ", err.Error())
 		return nil,err
 	}
-	newWallet := new(BitcoinDisposableWallet)
+	
+	newWallet :=new(BitcoinDisposableWallet)
 	newWallet.PrivateKey = pk
 	newWallet.PublicKey = &newWallet.PrivateKey.PublicKey
+
 	// Generate wallet address
 	firstHash := sha256.New()
 	// First hashing of public key with sha256
