@@ -4,7 +4,6 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/sha256"
-	"fmt"
 
 	// "math/big"
 	"crypto/rand"
@@ -14,9 +13,6 @@ import (
 	rp "golang.org/x/crypto/ripemd160"
 )
 
-
- 
- 
 func init() {
 	log.SetPrefix("Bitcoin:")
 
@@ -30,9 +26,6 @@ type BitcoinDisposableWallet struct {
 	Address    string            `json:"bitcoin_addr"`
 }
 
-
-
-
 func NewBitcoinDisposableWallet() (*BitcoinDisposableWallet, error) {
 
 	// Generate a private key
@@ -40,10 +33,10 @@ func NewBitcoinDisposableWallet() (*BitcoinDisposableWallet, error) {
 	if err != nil {
 		// replace with error returned in response from server
 		//log.Fatal("error generating new private key: %v ", err.Error())
-		return nil,err
+		return nil, err
 	}
-	
-	newWallet :=new(BitcoinDisposableWallet)
+
+	newWallet := new(BitcoinDisposableWallet)
 	newWallet.PrivateKey = pk
 	newWallet.PublicKey = &newWallet.PrivateKey.PublicKey
 
